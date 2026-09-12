@@ -29,6 +29,7 @@ public class DriveTrain {
     public double getRightRearPower() {
         return rightRearPower;
     }
+
     public DriveTrain(HardwareMap hwMap) {
         this.leftFront = hwMap.dcMotor.get(Constants.leftFront());
         this.leftRear = hwMap.dcMotor.get(Constants.leftRear());
