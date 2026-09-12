@@ -17,6 +17,19 @@ public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants();
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
+    public static String leftFront(){
+        return "leftFrontMotor";
+    }
+    public static String leftRear(){
+        return "leftRearMotor";
+    }
+    public static String rightFront() {
+        return "rightFrontMotor";
+    }
+    public static String rightRear() {
+        return "rightRearMotor";
+    }
+
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
             .hardwareMapName("pinpoint")
