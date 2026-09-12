@@ -28,14 +28,14 @@ public class DriveTrain {
         return rightRearPower;
     }
 
-    public DriveTrain(HardwareMap hwMap, Telemetry telemetry) {
+    public DriveTrain(HardwareMap hwMap) {
         this.leftFront = hwMap.dcMotor.get(Constants.leftFront());
         this.leftRear = hwMap.dcMotor.get(Constants.leftRear());
         this.rightFront = hwMap.dcMotor.get(Constants.rightFront());
         this.rightRear = hwMap.dcMotor.get(Constants.rightRear());
     }
 
-    public void gamepadConfigurator(Gamepad gamepad, Telemetry telemetry) {
+    public void gamepadConfigurator(Gamepad gamepad) {
         // Implementation for gamepad configuration
         double y = gamepad.left_stick_y;
         double x = gamepad.left_stick_x;
