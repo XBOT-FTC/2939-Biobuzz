@@ -5,7 +5,8 @@
 # Questions/notes for reviewers
 
 # Was this tested?
-
+- [ ] Yes
+- [ ] No
 -----
 
 PR feedback legend
