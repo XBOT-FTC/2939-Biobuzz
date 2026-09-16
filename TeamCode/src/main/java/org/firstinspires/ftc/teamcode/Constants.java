@@ -51,28 +51,28 @@ public class Constants {
                 .build();
     }
 
-    public static double inPerTick3231 = 0.02393;
-    public static double lateralInPerTick3231 = 0.02519;
+    public static double inPerTick2939 = 0.02393;
+    public static double lateralInPerTick2939 = 0.02519;
 
-    public static double ks3231 = 1.0967513649697667;
+    public static double ks2939 = 1.0967513649697667;
 
-    public static double kv3231 = 0.0042730455553834186;
+    public static double kv2939 = 0.0042730455553834186;
 
-    public static double ka3231 = .00067;
+    public static double ka2939 = .00067;
 
-    public static double trackWidth3231 = 1226.5643209432749;
+    public static double trackWidth2939 = 1226.5643209432749;
 
-    public static double axialGain3231 = 3;
+    public static double axialGain2939 = 3;
 
-    public static double axialVelGain3231 = 1.9;
+    public static double axialVelGain2939 = 1.9;
 
-    public static double headingGain3231 = 4.5;
+    public static double headingGain2939 = 4.5;
 
-    public static double headingVelGain3231 = .5;
+    public static double headingVelGain2939 = .5;
 
-    public static double lateralGain3231 = 1.3;
+    public static double lateralGain2939 = 1.3;
 
-    public static double lateralVelGain3231 = 0;
+    public static double lateralVelGain2939 = 0;
 
     public static class Params {
         // IMU orientation
@@ -84,14 +84,14 @@ public class Constants {
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD;
 
         // drive model parameters
-        public double inPerTick = Constants.inPerTick3231;
-        public double lateralInPerTick = Constants.lateralInPerTick3231;
-        public double trackWidthTicks = Constants.trackWidth3231;
+        public double inPerTick = Constants.inPerTick2939;
+        public double lateralInPerTick = Constants.lateralInPerTick2939;
+        public double trackWidthTicks = Constants.trackWidth2939;
 
         // feedforward parameters (in tick units)
-        public double kS = Constants.ks3231;
-        public double kV = Constants.kv3231;
-        public double kA = ka3231;
+        public double kS = Constants.ks2939;
+        public double kV = Constants.kv2939;
+        public double kA = ka2939;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -103,13 +103,13 @@ public class Constants {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = axialGain3231;
-        public double lateralGain = lateralGain3231;
-        public double headingGain = headingGain3231; // shared with turn
+        public double axialGain = axialGain2939;
+        public double lateralGain = lateralGain2939;
+        public double headingGain = headingGain2939; // shared with turn
 
-        public double axialVelGain = axialVelGain3231;
-        public double lateralVelGain = lateralVelGain3231;
-        public double headingVelGain = headingVelGain3231; // shared with turn
+        public double axialVelGain = axialVelGain2939;
+        public double lateralVelGain = lateralVelGain2939;
+        public double headingVelGain = headingVelGain2939; // shared with turn
     }
 
 }
