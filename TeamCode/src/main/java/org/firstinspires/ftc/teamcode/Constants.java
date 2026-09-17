@@ -11,7 +11,7 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-// this is a preview of how to make a PR. (Please Ignore.)
+
 public class Constants {
 
     public static FollowerConstants followerConstants = new FollowerConstants();
