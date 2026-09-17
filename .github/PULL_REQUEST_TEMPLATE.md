@@ -5,8 +5,13 @@
 # Questions/notes for reviewers
 
 # Was this tested?
-- [ ] Yes
-- [ ] No
+- [ ] **Yes**
+- [ ] **No**
+
+# Was AI used?
+- [ ] **Yes**
+- [ ] **No**
+
 -----
 
 PR feedback legend
