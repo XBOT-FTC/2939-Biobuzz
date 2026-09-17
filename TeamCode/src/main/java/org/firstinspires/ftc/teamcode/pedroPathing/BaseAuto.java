@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.localization.Localizer;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.Constants;
 
 
 @Autonomous(name = "Pedro Base Auto", group = "Autonomous")
