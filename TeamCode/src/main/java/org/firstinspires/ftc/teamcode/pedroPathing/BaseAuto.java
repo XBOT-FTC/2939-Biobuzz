@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.robot.Constants;
+
 
 @Autonomous(name = "Pedro Base Auto", group = "Autonomous")
 public class BaseAuto extends LinearOpMode {
