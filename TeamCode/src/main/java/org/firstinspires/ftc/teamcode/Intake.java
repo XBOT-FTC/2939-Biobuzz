@@ -1,42 +1,84 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
+import com.acmerobotics.dashboard.config.Config;
+import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
+import static com.pedropathing.ivy.commands.Commands.*;
+
+@Config
 public class Intake {
-    private final DcMotor intakeMotor;
+    private boolean slowMode = false;
+    private Mode mode = Mode.OFF;
+    public static double fastPower = -1;
+    public static double slowPower = -1;
+    public static double offPower = 0;
+    public static double reversePower = 1;
+    public static double shortReverseTimeMs = 150;
 
-    public Intake(HardwareMap hwMap) {
-        this.intakeMotor = hwMap.dcMotor.get("intakeMotor");
-        this.intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+    private final DcMotorEx intakeMotor;
+    private final Telemetry telemetry;
+
+
+    public Intake(HardwareMap hardwareMap) {
+        intakeMotor = hardwareMap.get(DcMotorEx.class, "intake");
+        this.telemetry = hardwareMap.get(Telemetry.class, "telemetry");
     }
 
-    public void startIntake(Gamepad gamepad) {
-        if (gamepad.right_trigger > 0.1) {
-            intakeMotor.setPower(gamepad.right_trigger);
-        } else if (gamepad.left_trigger > 0.1) {
-            intakeMotor.setPower(-gamepad.left_trigger);
-        } else {
-            intakeMotor.setPower(0);
-        }
+    public Command on() {
+        return instant(() -> mode = Mode.ON).requiring(intakeMotor);
     }
 
-    //Below are autonomous command features regarding intake.
-
-    public void runIntake() {
-        intakeMotor.setPower(1.0); // Run intake at full power
+    public Command off() {
+        return instant(() -> mode = Mode.OFF).requiring(intakeMotor);
     }
 
-    public void reverseIntake() {
-        intakeMotor.setPower(-1.0); // Reverse intake at full power
+    public Command reverse() {
+        return instant(() -> mode = Mode.REVERSE).requiring(intakeMotor);
     }
 
-    public void stopIntake() {
-        intakeMotor.setPower(0); // Stop the intake
+    public Command shortReverse() {
+        return reverse().then(waitMs(shortReverseTimeMs)).then(on());
     }
 
-    public double getIntakePower() {
-        return intakeMotor.getPower();
+    public Command toggle() {
+        return conditional(() -> mode == Mode.OFF, on(), off());
+    }
+
+    public void slowDown() {
+        slowMode = true;
+    }
+
+    public void speedUp() {
+        slowMode = false;
+    }
+
+    public Command periodic() {
+        return infinite(() -> {
+            switch (mode) {
+                case ON:
+                    intakeMotor.setPower(slowMode ? slowPower : fastPower);
+                    break;
+                case OFF:
+                    intakeMotor.setPower(offPower);
+                    break;
+                case REVERSE:
+                    intakeMotor.setPower(reversePower);
+                    break;
+            }
+
+            telemetry.addData("Intake Current", intakeMotor.getCurrent(CurrentUnit.MILLIAMPS));
+            telemetry.addData("Intake Velocity", intakeMotor.getVelocity());
+        });
+    }
+
+    enum Mode {
+        ON,
+        OFF,
+        REVERSE
     }
 }
