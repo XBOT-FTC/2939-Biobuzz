@@ -24,9 +24,9 @@ public class Intake {
     private final Telemetry telemetry;
 
 
-    public Intake(HardwareMap hardwareMap) {
+public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
         intakeMotor = hardwareMap.get(DcMotorEx.class, "intake");
-        this.telemetry = hardwareMap.get(Telemetry.class, "telemetry");
+        this.telemetry = telemetry;
     }
 
     public Command on() {
