@@ -60,4 +60,7 @@ public class BaseAuto extends LinearOpMode {
     protected void autonomousStateMachine() {
         // Autos are to be placed here
     }
-}
+    @Tuner
+    public static Procedure localizerTuner() {
+        return new LocalizerTuner();
+    }
