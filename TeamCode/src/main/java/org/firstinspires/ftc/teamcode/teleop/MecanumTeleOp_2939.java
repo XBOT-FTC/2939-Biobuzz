@@ -1,47 +1,47 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.pedropathing.algorithm.Foresight;
+import com.pedropathing.drivetrain.DrivePowers;
+import com.pedropathing.drivetrain.Drivetrain;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.follower.ManualDrive;
+import com.pedropathing.localization.Localizer;
+import com.pedropathing.math.Pose;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-@TeleOp(name = "2026TeleOp_2939", group="Linear OpMode")
-public class MecanumTeleOp_2939 extends LinearOpMode {
+import org.firstinspires.ftc.teamcode.Constants;
+
+@TeleOp(name = "Example TeleOp")
+public class MecanumTeleOp_2939 extends OpMode {
+    private Drivetrain drivetrain;
+    private Localizer localizer;
+    private Foresight foresight;
+
+    private Follower follower;
+
+    private final Gamepad driverGamepad = new Gamepad();
+
+    public void init() {
+        follower = Constants.createFollower(hardwareMap,drivetrain,localizer,foresight);
+
+    }
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        Drivetrain
-        waitForStart();
+    public void loop() {
+        DrivePowers powers = ManualDrive.fieldCentric(
+                -driverGamepad.left_stick_y,
+                driverGamepad.left_stick_x,
+                driverGamepad.right_stick_x,
+                follower.pose().heading()
+        );
 
+        ManualDrive.driveOrHold(follower, powers);
+        follower.update();
+        Pose robotPose = follower.pose();
 
-        if (isStopRequested()) return;
-
-        Gamepad currentGamepad1 = new Gamepad();
-        Gamepad previousGamepad1 = new Gamepad();
-        Gamepad currentGamepad2 = new Gamepad();
-        Gamepad previousGamepad2 = new Gamepad();
-
-        boolean wasOpYPressed = gamepad2.y;
-        boolean wasOpXPressed = gamepad2.x;
-        boolean wasOpAPressed = gamepad2.a;
-        boolean wasOpBPressed = gamepad2.b;
-
-        previousGamepad1.copy(currentGamepad1);
-        currentGamepad1.copy(gamepad1);
-
-        previousGamepad2.copy(currentGamepad2);
-        currentGamepad2.copy(gamepad2);
-
-        //Shooting Code
-        if (wasOpXPressed) {
-        // Action
-        } else if (wasOpAPressed) {
-            // Action
-        } else if (wasOpBPressed) {
-            // Action
-        } else if (wasOpYPressed) {
-            // Action
-        } else {
-            // Action
-        }
     }
 }
+
+
