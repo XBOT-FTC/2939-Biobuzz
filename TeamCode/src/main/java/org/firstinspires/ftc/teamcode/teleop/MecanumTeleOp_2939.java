@@ -1,19 +1,15 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
-import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @TeleOp(name = "2026TeleOp_2939", group="Linear OpMode")
 public class MecanumTeleOp_2939 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        DriveTrain drive = new DriveTrain(hardwareMap);
+        Drivetrain
         waitForStart();
 
 
