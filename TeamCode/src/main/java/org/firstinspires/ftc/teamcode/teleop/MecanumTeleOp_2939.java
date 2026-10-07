@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Constants;
 
-@TeleOp(name = "Example TeleOp")
+@TeleOp(name = "2026TeleOp_2939", group="OpMode")
 public class MecanumTeleOp_2939 extends OpMode {
     private Drivetrain drivetrain;
     private Localizer localizer;
@@ -22,6 +22,7 @@ public class MecanumTeleOp_2939 extends OpMode {
     private Follower follower;
 
     private final Gamepad driverGamepad = new Gamepad();
+    private final Gamepad opGamepad = new Gamepad();
 
     public void init() {
         follower = Constants.createFollower(hardwareMap,drivetrain,localizer,foresight);
@@ -41,7 +42,9 @@ public class MecanumTeleOp_2939 extends OpMode {
         follower.update();
         Pose robotPose = follower.pose();
 
+        if (opGamepad.rightTriggerWasPressed()) {
+            // example code
+        }
+
     }
 }
-
-
