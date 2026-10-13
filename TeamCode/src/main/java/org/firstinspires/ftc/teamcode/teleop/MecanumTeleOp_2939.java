@@ -43,7 +43,7 @@ public class MecanumTeleOp_2939 extends OpMode {
         Pose robotPose = follower.pose();
 
         if (opGamepad.rightTriggerWasPressed()) {
-            // example code
+            // Command here
         }
 
     }
