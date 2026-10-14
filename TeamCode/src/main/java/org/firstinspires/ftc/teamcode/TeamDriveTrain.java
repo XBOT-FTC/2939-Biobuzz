@@ -40,19 +40,19 @@ public class TeamDriveTrain implements Drivetrain {
         this.rightRear = hwMap.dcMotor.get(Constants.rightRear());
     }
 
-    public void gamepadConfigurator(Gamepad gamepad) {
-        // Implementation for gamepad configuration
-        double y = gamepad.left_stick_y;
-        double x = gamepad.left_stick_x;
-        double rx = -gamepad.right_stick_x;
-
-
-        double inputNormalization = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        this.leftFrontPower = (y + x + rx) / inputNormalization;
-        this.leftRearPower = (y - x + rx) / inputNormalization;
-        this.rightFrontPower = (y - x - rx) / inputNormalization;
-        this.rightRearPower = (y + x - rx) / inputNormalization;
-    }
+//    public void gamepadConfigurator(Gamepad gamepad) {
+//        // Implementation for gamepad configuration
+//        double y = gamepad.left_stick_y;
+//        double x = gamepad.left_stick_x;
+//        double rx = -gamepad.right_stick_x;
+//
+//
+//        double inputNormalization = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//        this.leftFrontPower = (y + x + rx) / inputNormalization;
+//        this.leftRearPower = (y - x + rx) / inputNormalization;
+//        this.rightFrontPower = (y - x - rx) / inputNormalization;
+//        this.rightRearPower = (y + x - rx) / inputNormalization;
+//    }
 
     public void setAllConstantMotorPower(double power) {
         leftFrontPower = power;
