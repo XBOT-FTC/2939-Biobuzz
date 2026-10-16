@@ -1,17 +1,82 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.pedropathing.algorithm.Foresight;
+import com.pedropathing.algorithm.ForesightConfig;
+import com.pedropathing.controllers.Controller;
 import com.pedropathing.drivetrain.Drivetrain;
 import com.pedropathing.follower.Follower;
 
 import com.pedropathing.localization.Localizer;
+import com.pedropathing.math.Vector2D;
+import com.pedropathing.revhub.drivetrains.Mecanum;
+import com.pedropathing.revhub.drivetrains.MecanumConfig;
+import com.pedropathing.revhub.localizers.PinpointConfig;
+import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
+    public static MecanumConfig driveConfig = new MecanumConfig(
+            c -> {
+                c.frontLeftName.set("left_front");
+                c.backLeftName.set("left_back");
+                c.frontRightName.set("right_front");
+                c.backRightName.set("right_back");
+
+                c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
+                c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
+                c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
+                c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
+                c.manualBrakeMode.set(true);
+            }
+    );
+
+    public static PinpointConfig localizerConfig = new PinpointConfig(
+            c -> {
+                c.name.set("pinpoint");
+
+                // These were set at random
+                c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
+                c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+                c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+
+                c.xPodOffset.set(2.0);
+                c.yPodOffset.set(2.0);
+            }
+    );
+
+    public static ForesightConfig foresightConfig = new ForesightConfig(
+            c -> {
+                c.forwardTranslational.set(Controller.proportional(0.0));
+                c.strafeTranslational.set(Controller.proportional(0.0));
+
+                c.maxAchievableForwardVelocity.set(5.0);
+                c.maxAchievableStrafeVelocity.set(5.0);
+                c.naturalForwardDeceleration.set(1.0);
+                c.naturalStrafeDeceleration.set(1.0);
+
+                // tune coefficient and kP later
+                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.0, 0.0));
+
+                c.headingFeedback.set(Controller.proportional(0.0));
+
+                c.coast.set(Controller.proportionalFeedforward(0.0));
+                c.brake.set(Controller.proportionalFeedforward(0.0));
+            }
+    );
+
+    public static Follower create(HardwareMap h) {
+        return new Follower(
+                new PinpointLocalizer(h, localizerConfig),
+                new Mecanum(h, driveConfig),
+                new Foresight(foresightConfig)
+        );
+    }
+
     public static String leftFront(){
         return "leftFrontMotor";
     }
@@ -93,7 +158,7 @@ public class Constants {
     }
 
 }
-//    // This is for pure driver encoder odometrry
+//    // This is for pure driver encoder odometry
 //    public static DriveEncoderConstants localizerConstants = new DriveEncoderConstants() {}
 //            .leftFrontMotorName("leftFront")
 //            .leftRearMotorName("leftRear")
