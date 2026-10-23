@@ -14,6 +14,7 @@ public class Shooter {
     public final DcMotorEx  shooterMotor;
 
     private final Telemetry telemetry;
+    private double  error;
     private boolean enabled;
 
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -36,11 +37,13 @@ public class Shooter {
     public Command shoot() {
         return infinite(() -> {
             if (enabled) {
-                shooterMotor.setPower(1);
+                shooterMotor.setPower( shooterController.calculate(1, error, 0) );
             }
             else {
                 shooterMotor.setPower(0);
             }
+
+            error = shooterMotor.getPower();
         });
     }
 }
