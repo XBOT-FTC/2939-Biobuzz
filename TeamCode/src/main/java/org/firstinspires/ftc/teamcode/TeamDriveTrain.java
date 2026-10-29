@@ -34,10 +34,10 @@ public class TeamDriveTrain implements Drivetrain {
     }
 
     public TeamDriveTrain(HardwareMap hwMap) {
-        this.leftFront = hwMap.dcMotor.get(Constants.leftFront());
-        this.leftRear = hwMap.dcMotor.get(Constants.leftRear());
-        this.rightFront = hwMap.dcMotor.get(Constants.rightFront());
-        this.rightRear = hwMap.dcMotor.get(Constants.rightRear());
+        this.leftFront = hwMap.dcMotor.get(Constants.driveConfig.frontLeftName.get());
+        this.leftRear = hwMap.dcMotor.get(Constants.driveConfig.backLeftName.get());
+        this.rightFront = hwMap.dcMotor.get(Constants.driveConfig.frontRightName.get());
+        this.rightRear = hwMap.dcMotor.get(Constants.driveConfig.backRightName.get());
     }
 
 //    public void gamepadConfigurator(Gamepad gamepad) {

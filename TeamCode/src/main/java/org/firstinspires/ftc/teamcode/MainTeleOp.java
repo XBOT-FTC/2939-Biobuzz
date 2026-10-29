@@ -6,6 +6,8 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
 import java.util.List;
 
 @TeleOp(name = "Main TeleOp", group = "TeleOp")
@@ -22,7 +24,7 @@ public class MainTeleOp extends OpMode {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         }
 
-        follower = Constants.createFollower(hardwareMap);
+        follower = Robot.createFollower(hardwareMap);
         follower.update();
 
         intake = new Intake(hardwareMap, telemetry);
@@ -33,23 +35,18 @@ public class MainTeleOp extends OpMode {
     }
 
     @Override
-    public void start() {
-        follower.startTeleopDrive();
-    }
-
-    @Override
     public void loop() {
         for (LynxModule hub : hubs) {
             hub.clearBulkCache();
         }
 
-        follower.update();
-        follower.setTeleOpDrive(
+        // Robot centric
+        follower.manual(
                 -gamepad1.left_stick_y,
                 -gamepad1.left_stick_x,
-                -gamepad1.right_stick_x,
-                true // robot centric
+                -gamepad1.right_stick_x
         );
+        follower.update();
 
         // Hold to run. Any press/release re-picks from the buttons still held.
         // Non-short-circuit | so every edge flag gets read and cleared each loop.
@@ -65,7 +62,7 @@ public class MainTeleOp extends OpMode {
 
         Scheduler.execute();
 
-        telemetry.addData("Pose", follower.getPose());
+        telemetry.addData("Pose", follower.pose());
         telemetry.update();
     }
 }
