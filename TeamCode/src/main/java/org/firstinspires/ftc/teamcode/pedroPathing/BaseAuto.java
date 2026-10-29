@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.localization.Localizer;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -26,6 +27,9 @@ public class BaseAuto extends LinearOpMode {
 
     protected PathState pathState;
 
+    // Subclasses set this to where the robot is placed on the field.
+    protected Pose startPose = new Pose();
+
     // Helper method to easily change states and reset the timer
     public void setPathState(PathState state) {
         pathState = state;
@@ -37,6 +41,9 @@ public class BaseAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         follower = Constants.createFollower(hardwareMap);
+        follower.setStartingPose(startPose);
+        // Scheduler is static, so clear commands left over from the last OpMode.
+        Scheduler.reset();
         pathTimer = new Timer();
         opModeTimer = new ElapsedTime();
 
@@ -51,6 +58,11 @@ public class BaseAuto extends LinearOpMode {
             follower.update();
 
             autonomousStateMachine();
+            Scheduler.execute();
+
+            telemetry.addData("State", pathState);
+            telemetry.addData("Pose", follower.getPose());
+            telemetry.update();
         }
     }
 

@@ -18,13 +18,13 @@ public class Intake {
     public static double slowPower = -0.5;
     public static double offPower = 0;
     public static double reversePower = 1;
-    public static double shortReverseTimeMs = 150;
+    // getCurrent() is a separate hub call (not in the bulk read), ~2ms per loop; enable only when debugging.
+    public static boolean logCurrent = false;
 
     private final DcMotorEx intakeMotor;
     private final Telemetry telemetry;
 
-
-public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
+    public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
         intakeMotor = hardwareMap.get(DcMotorEx.class, "intake");
         this.telemetry = telemetry;
     }
@@ -39,10 +39,6 @@ public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
 
     public Command reverse() {
         return instant(() -> mode = Mode.REVERSE).requiring(intakeMotor);
-    }
-
-    public Command shortReverse() {
-        return reverse().then(waitMs(shortReverseTimeMs)).then(on());
     }
 
     public Command toggle() {
@@ -71,8 +67,11 @@ public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
                     break;
             }
 
-            telemetry.addData("Intake Current", intakeMotor.getCurrent(CurrentUnit.MILLIAMPS));
+            telemetry.addData("Intake Mode", mode);
             telemetry.addData("Intake Velocity", intakeMotor.getVelocity());
+            if (logCurrent) {
+                telemetry.addData("Intake Current", intakeMotor.getCurrent(CurrentUnit.MILLIAMPS));
+            }
         });
     }
 
