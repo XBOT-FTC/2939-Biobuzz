@@ -16,16 +16,18 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.pedropathing.math.Matrix;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
     public static MecanumConfig driveConfig = new MecanumConfig(
             c -> {
-                c.frontLeftName.set("left_front");
-                c.backLeftName.set("left_back");
-                c.frontRightName.set("right_front");
-                c.backRightName.set("right_back");
+                c.frontLeftName.set("frontLeftMotor");
+                c.backLeftName.set("backLeftMotor");
+                c.frontRightName.set("frontRightMotor");
+                c.backRightName.set("backRightMotor");
 
                 c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
                 c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
@@ -42,7 +44,7 @@ public class Constants {
                 // These were set at random
                 c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
                 c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
-                c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+                c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
                 c.xPodOffset.set(2.0);
                 c.yPodOffset.set(2.0);
@@ -50,23 +52,43 @@ public class Constants {
     );
 
     public static ForesightConfig foresightConfig = new ForesightConfig(
-            c -> {
-                c.forwardTranslational.set(Controller.proportional(0.0));
-                c.strafeTranslational.set(Controller.proportional(0.0));
+        c -> {
 
-                c.maxAchievableForwardVelocity.set(5.0);
-                c.maxAchievableStrafeVelocity.set(5.0);
-                c.naturalForwardDeceleration.set(1.0);
-                c.naturalStrafeDeceleration.set(1.0);
+            c.forwardTranslational.set(
+                Controller.proportional(0.3)
+            );
+            c.strafeTranslational.set(
+                    Controller.proportional(0.3)
+            );
+            c.maxAchievableForwardVelocity.set(50.0);
+            c.maxAchievableStrafeVelocity.set(35.0);
 
-                // tune coefficient and kP later
-                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.0, 0.0));
+            c.naturalForwardDeceleration.set(15.0);
+            c.naturalStrafeDeceleration.set(15.0);
 
-                c.headingFeedback.set(Controller.proportional(0.0));
+            // PROVISIONAL ONLY: replace with tuner results.
+            c.headingBrakeCoefficients.set(
+                    Vector2D.cartesian(1.0, 1.0)
+            );
+            c.linearBrakeCoefficients.set(
+                    Matrix.diag(0.1, 0.1)
+            );
 
-                c.coast.set(Controller.proportionalFeedforward(0.0));
-                c.brake.set(Controller.proportionalFeedforward(0.0));
-            }
+            c.quadraticBrakeCoefficients.set(
+                    Matrix.diag(0.001, 0.001)
+            );
+            c.headingFeedback.set(
+                    Controller.proportional(1.0)
+            );
+
+            c.coast.set(
+                    Controller.proportionalFeedforward(0.01)
+            );
+            c.brake.set(
+                    Controller.proportionalFeedforward(0.01)
+            );
+
+        }
     );
 
     public static Follower create(HardwareMap h) {
@@ -78,16 +100,16 @@ public class Constants {
     }
 
     public static String leftFront(){
-        return "leftFrontMotor";
+        return "frontLeftMotor";
     }
     public static String leftRear(){
-        return "leftRearMotor";
+        return "backLeftMotor";
     }
     public static String rightFront() {
-        return "rightFrontMotor";
+        return "frontRightMotor";
     }
     public static String rightRear() {
-        return "rightRearMotor";
+        return "backRightMotor";
     }
 
 
