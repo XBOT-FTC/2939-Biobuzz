@@ -1,39 +1,35 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.pedropathing.algorithm.Foresight;
 import com.pedropathing.drivetrain.DrivePowers;
-import com.pedropathing.drivetrain.Drivetrain;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
-import com.pedropathing.localization.Localizer;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.TeamDriveTrain;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @TeleOp(name = "2026TeleOp_2939", group="OpMode")
 public class MecanumTeleOp_2939 extends OpMode {
-    private Localizer localizer;
-    private Foresight foresight;
-    private TeamDriveTrain drive;
     private Follower follower;
 
-    private final Gamepad driverGamepad = new Gamepad();
-    private final Gamepad opGamepad = new Gamepad();
+    private Gamepad driverGamepad;
+    private Gamepad opGamepad;
 
     public void init() {
-        follower = Constants.createFollower(hardwareMap,drive,localizer,foresight);
+        follower = Robot.createFollower(hardwareMap);
+        driverGamepad = gamepad1;
+        opGamepad = gamepad2;
     }
 
     @Override
     public void loop() {
+        // Pedro's DrivePowers are left-positive strafe and CCW-positive turn, so stick x is negated.
         DrivePowers powers = ManualDrive.fieldCentric(
                 -driverGamepad.left_stick_y,
-                driverGamepad.left_stick_x,
-                driverGamepad.right_stick_x,
+                -driverGamepad.left_stick_x,
+                -driverGamepad.right_stick_x,
                 follower.pose().heading()
         );
 
