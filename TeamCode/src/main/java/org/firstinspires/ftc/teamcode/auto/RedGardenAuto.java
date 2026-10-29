@@ -4,6 +4,7 @@ import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.waitMs;
+import static com.pedropathing.ivy.groups.Groups.race;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
@@ -13,12 +14,15 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.robot.Robot;
+
+import java.util.List;
 
 /**
  * Starts against the audience wall, intakes the 4 POLLEN in our GARDEN, then PARKs in our LOADING ZONE.
@@ -30,6 +34,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 public class RedGardenAuto extends OpMode {
     private Follower follower;
     private Intake intake;
+    private List<LynxModule> hubs;
 
     // Touching the audience wall on red's side, intake facing the wall.
     private final Pose startPose;
@@ -70,19 +75,33 @@ public class RedGardenAuto extends OpMode {
         return curve(gardenPose, parkControl1, parkControl2, parkPose).linear(gardenPose, parkPose);
     }
 
+    // follow() only ends at the path's end, so a robot stuck on POLLEN or a wall would never move on to PARK.
+    // GARDEN limits start from Mona Shores' BIOBUZZ GardenGather (same Pedro 3 + Ivy stack: 4 s line-up, 4 s drive in,
+    // 1.5 s intake dwell), with 2 s more per drive because our robot is slower. GARDEN POLLEN scores nothing in AUTO
+    // but PARK does, so the rest of the 30 s (16.5 s) goes to PARK.
+    private Command followFor(Path path, double timeoutMs) {
+        return race(follow(follower, path), waitMs(timeoutMs));
+    }
+
     private Command autoRoutine() {
         return sequential(
-                follow(follower, toGarden()),
+                followFor(toGarden(), 6000),
                 intake.on(),
-                follow(follower, intoGarden()),
-                waitMs(1000),
+                followFor(intoGarden(), 6000),
+                waitMs(1500),
                 intake.off(),
-                follow(follower, park())
+                followFor(park(), 16500)
         );
     }
 
     @Override
     public void init() {
+        // One bulk read per loop instead of one hub call per encoder/velocity read.
+        hubs = hardwareMap.getAll(LynxModule.class);
+        for (LynxModule hub : hubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
+
         // Scheduler is static, so clear commands left over from the last OpMode.
         Scheduler.reset();
 
@@ -101,6 +120,10 @@ public class RedGardenAuto extends OpMode {
 
     @Override
     public void loop() {
+        for (LynxModule hub : hubs) {
+            hub.clearBulkCache();
+        }
+
         follower.update();
         Scheduler.execute();
 
