@@ -25,10 +25,11 @@ public class MecanumTeleOp_2939 extends OpMode {
 
     @Override
     public void loop() {
+        // Pedro's DrivePowers are left-positive strafe and CCW-positive turn, so stick x is negated.
         DrivePowers powers = ManualDrive.fieldCentric(
                 -driverGamepad.left_stick_y,
-                driverGamepad.left_stick_x,
-                driverGamepad.right_stick_x,
+                -driverGamepad.left_stick_x,
+                -driverGamepad.right_stick_x,
                 follower.pose().heading()
         );
 

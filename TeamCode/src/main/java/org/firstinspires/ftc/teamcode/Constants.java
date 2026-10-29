@@ -52,25 +52,4 @@ public class Constants {
                 c.naturalStrafeDeceleration.set(1.0);
             }
     );
-
-    public static double inPerTick2939 = 0.02393;
-    public static double lateralInPerTick2939 = 0.02519;
-
-    public static double ks2939 = 1.0967513649697667;
-
-    public static double ka2939 = .00067;
-
-    public static double trackWidth2939 = 1226.5643209432749;
-
 }
-//    // This is for pure driver encoder odometry
-//    public static DriveEncoderConstants localizerConstants = new DriveEncoderConstants() {}
-//            .leftFrontMotorName("leftFront")
-//            .leftRearMotorName("leftRear")
-//            .rightFrontMotorName("rightFront")
-//            .rightRearMotorName("rightRear")
-//
-//            .leftFrontEncoderDirection(Encoder.FORWARD)
-//            .leftRearEncoderDirection(Encoder.FORWARD)
-//            .rightFrontEncoderDirection(Encoder.FORWARD)
-//            .rightRearEncoderDirection(Encoder.FORWARD);
