@@ -27,8 +27,8 @@ public class MecanumTeleOp2939 extends OpMode {
 
         DrivePowers powers = ManualDrive.fieldCentric(
                 -driverGamepad.left_stick_y,
-                driverGamepad.left_stick_x,
-                driverGamepad.right_stick_x,
+                -driverGamepad.left_stick_x, // negated: strafe was reversed on the robot
+                -driverGamepad.right_stick_x, // negated: rotation was reversed on the robot
                 follower.pose().heading()
         );
 
