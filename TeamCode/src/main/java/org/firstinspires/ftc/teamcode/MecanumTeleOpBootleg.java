@@ -16,13 +16,12 @@ public class MecanumTeleOpBootleg extends OpMode {
     @Override
     public void loop() {
         double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x * 1.1;
         double rx = gamepad1.right_stick_x;
 
-        double leftFront = y + x + rx;
-        double leftRear = y - x + rx;
-        double rightFront = y - x - rx;
-        double rightRear = y + x - rx;
+        double leftFront = y + rx;
+        double leftRear = y + rx;
+        double rightFront = y - rx;
+        double rightRear = y - rx;
 
         drive.setPowers(leftFront, leftRear, rightFront, rightRear);
 
