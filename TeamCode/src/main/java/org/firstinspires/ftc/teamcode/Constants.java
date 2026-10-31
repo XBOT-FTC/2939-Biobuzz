@@ -24,10 +24,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Constants {
     public static MecanumConfig driveConfig = new MecanumConfig(
             c -> {
-                c.frontLeftName.set("frontLeftMotor");
-                c.frontRightName.set("frontRightMotor");
-                c.backLeftName.set("backLeftMotor");
-                c.backRightName.set("backRightMotor");
+                c.frontLeftName.set(leftFront()); // port 0
+                c.frontRightName.set(rightFront()); //port 1
+                c.backLeftName.set(leftRear()); // port 2
+                c.backRightName.set(rightRear()); // port 3
 
                 c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
                 c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
@@ -39,7 +39,7 @@ public class Constants {
 
     public static PinpointConfig localizerConfig = new PinpointConfig(
             c -> {
-                c.name.set("pinpoint");
+                c.name.set("pinpoint"); // Port 0
 
                 // These were set at random
                 c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
