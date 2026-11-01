@@ -22,6 +22,8 @@ import com.pedropathing.math.Matrix;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
+    public static String intakeMotorName = "intake";
+
     public static MecanumConfig driveConfig = new MecanumConfig(
             c -> {
                 c.frontLeftName.set(leftFront()); // port 0
