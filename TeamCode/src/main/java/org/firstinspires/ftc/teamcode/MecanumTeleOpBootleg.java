@@ -17,7 +17,7 @@ public class MecanumTeleOpBootleg extends OpMode {
 
     @Override
     public void loop() {
-        double y = -gamepad1.left_stick_y;
+        double y = gamepad1.left_stick_y;
         double rx = gamepad1.right_stick_x;
 
         double leftFront = y + rx;
@@ -27,7 +27,7 @@ public class MecanumTeleOpBootleg extends OpMode {
 
         drive.setPowers(leftFront, leftRear, rightFront, rightRear);
 
-        intake.update(gamepad1.x, gamepad1.b);
+        intake.update(gamepad1.right_trigger > 0.1, gamepad1.left_trigger > 0.1);
 
         telemetry.addData("Powers", "LF %.2f LR %.2f RF %.2f RR %.2f",
                 drive.leftFrontPower,

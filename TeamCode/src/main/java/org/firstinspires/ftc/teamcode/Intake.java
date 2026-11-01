@@ -8,8 +8,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class Intake {
     private Mode mode = Mode.OFF;
-    public static double intakePower = -1;
-    public static double outtakePower = 1;
+    public static double intakePower = 1;
+    public static double outtakePower = -1;
     public static double offPower = 0;
     // getCurrent() is a separate hub call (not in the bulk read), ~2ms per loop; enable only when debugging.
     public static boolean logCurrent = false;
