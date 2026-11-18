@@ -22,6 +22,10 @@ public class TeamDriveTrain {
         rightFront = hwMap.get(DcMotor.class, Constants.rightFront());
         rightRear = hwMap.get(DcMotor.class, Constants.rightRear());
 
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
 
         setAllZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         stop();
