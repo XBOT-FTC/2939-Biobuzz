@@ -17,12 +17,12 @@ public class IntakeSubsystem {
     }
 
     public void intake() {
-       intake.setPower(0.5);
+       intake.setPower(1);
        telemetry.addData("intake state:", "intaking");
     }
 
     public void eject() {
-        intake.setPower(-0.5);
+        intake.setPower(-1);
         telemetry.addData("intake state:", "ejecting");
     }
 
