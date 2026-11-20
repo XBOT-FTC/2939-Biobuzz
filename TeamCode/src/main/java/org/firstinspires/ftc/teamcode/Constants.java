@@ -18,9 +18,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.pedropathing.math.Matrix;
 
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 public class Constants {
     public static MecanumConfig driveConfig = new MecanumConfig(
             c -> {
@@ -99,10 +96,10 @@ public class Constants {
         );
     }
 
-    public static String leftFront(){
+    public static String leftFront() {
         return "frontLeftMotor";
     }
-    public static String leftRear(){
+    public static String leftRear() {
         return "backLeftMotor";
     }
     public static String rightFront() {
@@ -110,6 +107,22 @@ public class Constants {
     }
     public static String rightRear() {
         return "backRightMotor";
+    }
+
+    public static String intakeMotor() {
+        return "intakeMotor";
+    }
+
+    public static String pollenShooterMotor() {
+        return "pollenShooterMotor";
+    }
+
+    public static String nectarSwingServo() {
+        return "nectarSwing";
+    }
+
+    public static String pollenSwingServo() {
+        return "pollenSwing";
     }
 
 

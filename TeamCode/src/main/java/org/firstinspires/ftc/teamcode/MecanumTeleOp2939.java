@@ -34,11 +34,5 @@ public class MecanumTeleOp2939 extends OpMode {
 
         ManualDrive.driveOrHold(follower, powers);
         follower.update();
-//        Pose robotPose = follower.pose(); Add this when we have a pinpoint
-
-//        if (gamepad1.rightTriggerWasPressed()) {
-//            // Command here
-//        }
-
     }
 }

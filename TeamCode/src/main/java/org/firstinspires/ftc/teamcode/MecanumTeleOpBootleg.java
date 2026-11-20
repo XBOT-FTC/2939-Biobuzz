@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.robot.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.robot.ShooterSubsystem;
+import org.firstinspires.ftc.teamcode.robot.TransferSubsystem;
+
 @TeleOp(name="Mecanum teleop bootleg")
 public class MecanumTeleOpBootleg extends LinearOpMode {
     @Override
@@ -23,11 +27,31 @@ public class MecanumTeleOpBootleg extends LinearOpMode {
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        TransferSubsystem transferSubsystem = new TransferSubsystem(hardwareMap, telemetry);
+        IntakeSubsystem intakeSubsystem = new IntakeSubsystem(hardwareMap, telemetry);
+        ShooterSubsystem shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
+
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+            transferSubsystem.execute();
+
+            if (gamepad1.leftBumperWasPressed()) {
+                intakeSubsystem.eject();
+            } else if (gamepad1.rightBumperWasPressed()) {
+                intakeSubsystem.intake();
+            } else {
+                intakeSubsystem.stop();
+            }
+
+            if (gamepad1.rightTriggerWasPressed()) {
+               shooterSubsystem.shoot();
+            } else {
+                shooterSubsystem.maintain();
+            }
+
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
