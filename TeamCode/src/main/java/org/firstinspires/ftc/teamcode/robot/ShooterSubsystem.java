@@ -10,26 +10,26 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 
 public class ShooterSubsystem {
-    DcMotorEx nectarShooter;
+    DcMotorEx pollenShooter;
     Telemetry telemetry;
-    PIDFCoefficients pollenPid = new PIDFCoefficients(0.005, 0, 0, 1);
+    PIDFCoefficients shooterPid = new PIDFCoefficients(0.005, 0, 0, 1);
 
-    int nectarShooterMaintainVelocity = 500;
-    int nectarShooterShootVelocity = 1000;
+    int pollenShooterMaintainVelocity = 500;
+    int pollenShooterShootVelocity = 1000;
 
     public ShooterSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
-        hardwareMap.get(DcMotorEx.class, Constants.pollenShooterMotor());
+        pollenShooter = hardwareMap.get(DcMotorEx.class, Constants.pollenShooterMotor());
         this.telemetry = telemetry;
-        nectarShooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pollenPid);
+        pollenShooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, shooterPid);
     }
 
     public void shoot() {
-        nectarShooter.setVelocity(nectarShooterShootVelocity);
-        telemetry.addData("Shooter speed: ",  nectarShooterShootVelocity);
+        pollenShooter.setVelocity(pollenShooterShootVelocity);
+        telemetry.addData("Shooter speed: ",  pollenShooterShootVelocity);
     }
 
     public void maintain() {
-        nectarShooter.setVelocity(nectarShooterMaintainVelocity);
-        telemetry.addData("Shooter speed: ",  nectarShooterMaintainVelocity);
+        pollenShooter.setVelocity(pollenShooterMaintainVelocity);
+        telemetry.addData("Shooter speed: ",  pollenShooterMaintainVelocity);
     }
 }

@@ -12,15 +12,13 @@ public class IntakeSubsystem {
 
     Telemetry telemetry;
     public IntakeSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
-        hardwareMap.get(Constants.intakeMotor());
+        intake = hardwareMap.get(DcMotor.class, Constants.intakeMotor());
         this.telemetry = telemetry;
     }
 
     public void intake() {
        intake.setPower(0.5);
        telemetry.addData("intake state:", "intaking");
-
-
     }
 
     public void eject() {
@@ -32,5 +30,4 @@ public class IntakeSubsystem {
         intake.setPower(0);
         telemetry.addData("intake state:", "stopped");
     }
-
 }
