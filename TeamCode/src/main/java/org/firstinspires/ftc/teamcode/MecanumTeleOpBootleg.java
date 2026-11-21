@@ -38,18 +38,18 @@ public class MecanumTeleOpBootleg extends LinearOpMode {
         while (opModeIsActive()) {
             transferSubsystem.execute();
 
-            if (gamepad1.leftBumperWasPressed()) {
+            if (gamepad1.left_bumper) {
                 intakeSubsystem.eject();
-            } else if (gamepad1.rightBumperWasPressed()) {
+            } else if (gamepad1.right_bumper) {
                 intakeSubsystem.intake();
             } else {
                 intakeSubsystem.stop();
             }
 
-            if (gamepad1.rightTriggerWasPressed()) {
+            if (gamepad1.right_trigger_pressed) {
                shooterSubsystem.shoot();
             } else {
-                shooterSubsystem.maintain();
+                shooterSubsystem.stop();
             }
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
@@ -69,6 +69,8 @@ public class MecanumTeleOpBootleg extends LinearOpMode {
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
+
+            telemetry.update();
         }
     }
 }
